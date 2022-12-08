@@ -4,7 +4,7 @@
     <img src="./assets/icon.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">PlanStation</h3>
+<h3 align="center">PlanStation (WIP)</h3>
 
   <p align="center">
     Manage your Task and get your Job Done with our Task Manager

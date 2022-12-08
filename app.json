@@ -8,7 +8,6 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -21,13 +20,25 @@
       "supportsTablet": true
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.dev.planstation"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "scheme": "com.dev.planstation",
+    "plugins": [
+      "@react-native-firebase/app",
+      "@react-native-firebase/perf"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "feea1628-f03c-4c32-b298-82c2df6cb1bd"
+      }
     }
   }
 }

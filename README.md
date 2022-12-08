@@ -17,6 +17,10 @@
 
 Ikuti perintah berikut agar Aplikasi RN Expo bisa di run.
 
+### Built With
+
+* [![React][React.js]][React-url]
+
 ### Prerequisites
 
 Penting! install bahan dibawah ini:
@@ -37,5 +41,5 @@ Penting! install bahan dibawah ini:
    ```sh
    npm run android
    ```
-   
+
 <p align="right">(<a href="#readme-top">Balik Ke atas</a>)</p>

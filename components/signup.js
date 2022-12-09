@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Image, Text, View, Alert, ActivityIndicator } from 'react-native';
+import { ScrollView, StyleSheet, Image, Text, View, Alert, ActivityIndicator } from 'react-native';
 import firebase from '../database/firebase';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import Tombol from './custombutton';
 import InputBox from 'react-native-floating-label-inputbox';
 
@@ -146,13 +145,15 @@ const styles = StyleSheet.create({
     fontSize: 40,
   },
   logo_container: {
+    resizeMode: 'contain',
+    alignSelf: 'center',
     backgroundColor: '#fff',
-    width: 100,
-    height: 100,
-    borderRadius: 15,
-    marginTop: -100,
-    marginBottom: -100,
-    marginLeft: 150,
+    width: 130,
+    height: 130,
+    padding: 15,
+    marginTop: -200,
+    marginBottom: -75,
+    borderRadius: 25,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

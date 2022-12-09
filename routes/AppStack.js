@@ -1,12 +1,16 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Profile from './profile';
-import Agenda from './agenda';
-import Task from './task';
-import AddTask from './addtask';
+import Profile from '../components/profile';
+import Agenda from '../components/agenda';
+import Task from '../components/task';
+import AddTask from '../components/addtask';
+import Dashboard from '../components/dashboard';
 
 const Tab = createMaterialBottomTabNavigator();
+const Stack = createStackNavigator();
 
 function TabNav() {
   return (
@@ -36,8 +40,8 @@ function TabNav() {
             }}
           />
           <Tab.Screen 
-            name="Agenda" 
-            component={Agenda} 
+            name="Agenda"
+            component={Agenda}
             options={{
               tabBarLabel: 'Agenda',
               tabBarIcon: ({ color }) => (
@@ -58,10 +62,49 @@ function TabNav() {
         </Tab.Navigator>
   )
 }
-export default class Dashboard extends Component {
+export default class AppStack extends Component {
   render() {   
     return (
-        <TabNav />
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Dashboard"
+          screenOptions={{
+            headerTitleAlign: 'center',
+            headerStyle: {
+              backgroundColor: '#F5FBFF',
+            },
+            headerTintColor: '#2F394B',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerShown: true,
+          }}>
+          <Stack.Screen
+            name="Dashboard"
+            component={Dashboard}
+            options={{ title: 'PlanStation'}}
+          />
+          <Stack.Screen 
+            name="AddTask" 
+            component={AddTask} 
+            options={{ title: 'Add Task' }}
+          />       
+          <Stack.Screen 
+            name="Agenda" 
+            component={Agenda} 
+            options={
+              {title: 'Agenda'}
+            }
+          />
+          <Stack.Screen 
+          name="Profile" 
+          component={Profile} 
+          options={
+            { title: 'Profile' }
+          }
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     );
   }
 }

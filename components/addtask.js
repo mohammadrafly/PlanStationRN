@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import firebase from '../database/firebase';
 import Tombol from './CustomButton2';
-import SelectInput from './SelectInput';
-import { StyleSheet, TextInput, Button, View, Image, ScrollView, ActivityIndicator, Pressable } from 'react-native';
+import { StyleSheet, TextInput, View, Image, ScrollView, ActivityIndicator } from 'react-native';
 
 class AddTask extends Component {
     constructor() {
       super();
       this.dbRef = firebase.firestore().collection('task');
       this.state = {
-        name: '',
-        email: '',
-        mobile: '',
+        nametask: '',
+        subtask: '',
+        detail: '',
+        uid: firebase.auth().currentUser.uid,
         isLoading: false
       };
     }
@@ -20,22 +20,24 @@ class AddTask extends Component {
       state[prop] = val;
       this.setState(state);
     }
-    storeUser() {
-      if(this.state.name === ''){
-       alert('Fill at least your name!')
+    storeTask() {
+      if(this.state.nametask === ''){
+       alert('Fill at least your nametask!')
       } else {
         this.setState({
           isLoading: true,
         });      
         this.dbRef.add({
-          name: this.state.name,
-          email: this.state.email,
-          mobile: this.state.mobile,
+          nametask: this.state.nametask,
+          subtask: this.state.subtask,
+          detail: this.state.detail,
+          uid: firebase.auth().currentUser.uid,
         }).then((res) => {
           this.setState({
-            name: '',
-            email: '',
-            mobile: '',
+            nametask: '',
+            subtask: '',
+            detail: '',
+            uid: firebase.auth().currentUser.uid,
             isLoading: false,
           });
           this.props.navigation.navigate('Task')
@@ -61,9 +63,9 @@ class AddTask extends Component {
             <View style={styles.text_top_container}>
                 <TextInput
                     style={styles.inputStyleTop}
-                    placeholder={'Name'}
-                    value={this.state.name}
-                    onChangeText={(val) => this.inputValueUpdate(val, 'name')}
+                    placeholder={'nametask'}
+                    value={this.state.nametask}
+                    onChangeText={(val) => this.inputValueUpdate(val, 'nametask')}
                 />
                 <View style={styles.row}>
                     <View style={styles.inputStyleTop2}>
@@ -73,7 +75,6 @@ class AddTask extends Component {
                         />
                         <TextInput
                             placeholder={'Repeat'}
-                            value={this.state.name}
                             onPress={() => this.storeUser()}
                             underlineColorAndroid="transparent"
                         />
@@ -86,7 +87,6 @@ class AddTask extends Component {
                         />
                         <TextInput
                             placeholder={'Deadline'}
-                            value={this.state.name}
                             onPress={() => this.storeUser()}
                             underlineColorAndroid="transparent"
                         />
@@ -98,31 +98,30 @@ class AddTask extends Component {
                             style={styles.imageStyle}
                         />
                         <TextInput
-                            placeholder={'Reminder'}
-                            value={this.state.name}
+                            placeholder={'Reminer'}
                             onPress={() => this.storeUser()}
                             underlineColorAndroid="transparent"
                         />
                     </View>
             </View>
             <ScrollView style={styles.text_input_container}>
-                <SelectInput></SelectInput>
                 <TextInput
                     style={styles.inputStyle}
                     placeholder={'Add Subtask'}
-                    value={this.state.name}
-                    onChangeText={(val) => this.inputValueUpdate(val, 'name')}
+                    value={this.state.subtask}
+                    onChangeText={(val) => this.inputValueUpdate(val, 'subtask')}
                 />
                 <TextInput
+                    multiline
                     style={styles.inputStyle}
                     placeholder={'Detail'}
-                    value={this.state.email}
-                    onChangeText={(val) => this.inputValueUpdate(val, 'email')}
+                    value={this.state.detail}
+                    onChangeText={(val) => this.inputValueUpdate(val, 'detail')}
                 />
                 <Tombol
                     color="#3740FE"
                     title="Create"
-                    onPress={() => this.storeUser()} 
+                    onPress={() => this.storeTask()} 
                 /> 
             </ScrollView>
         </View>

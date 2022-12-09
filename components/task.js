@@ -1,25 +1,22 @@
-import * as React from 'react';
-import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { StyleSheet, Text, View, Image, useWindowDimensions, ActivityIndicator, Pressable } from 'react-native';
+import  * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { 
+    StyleSheet,
+    Text,
+    View,
+    Pressable,
+} from 'react-native';
+import FetchData from './FetchData';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 function ToDo() {
     return (
-        <View style={styles.text_input_container}>
-            <View style={styles.wrapper}>
-                <Text style={styles.text_input_top}>
-                    Todo
-                </Text>
-                <View style={styles.text_desc}>
-                    
-                </View>
-            </View>   
-        </View> 
-    );
-  }
-  
+        <View style={styles.containerCard}>
+            <FetchData />
+        </View>
+    )
+}
+
 function OnProgress() {
     return (
         <View style={styles.text_input_container}>
@@ -57,41 +54,17 @@ function Complete() {
   }
 
 const Tab = createMaterialTopTabNavigator();
-const MyTheme = {
-    ...DefaultTheme,
-    colors: {
-      ...DefaultTheme.colors,
-      primary: 'rgb(255, 45, 85)',
-    },
-  };
 
 export default function Main() {
         return (
-        <View style={styles.container}>  
+        <View style={styles.containerTabs}>  
             <NavigationContainer
-            theme={MyTheme}
             independent={true}
             >
                 <Tab.Navigator
-                    screenOptions={({ route }) => ({
-                    backgroundColor: '#F5FBFF',
-                    tabBarIcon: ({ focused, color, size }) => {
-                      let iconName;
-          
-                      if (route.name === 'Home') {
-                        iconName = focused
-                          ? 'ios-information-circle'
-                          : 'ios-information-circle-outline';
-                      } else if (route.name === 'Settings') {
-                        iconName = focused ? 'ios-list' : 'ios-list-outline';
-                      }
-          
-                      // You can return any component that you like here!
-                      return <Ionicons name={iconName} size={size} color={color} />;
-                    },
-                    tabBarActiveTintColor: 'tomato',
-                    tabBarInactiveTintColor: 'gray',
-                })}
+                    screenOptions={{
+                        swipeEnabled: false
+                    }}
                 >
                     <Tab.Screen name="To Do" component={ToDo} />
                     <Tab.Screen name="On Progress" component={OnProgress} />
@@ -103,11 +76,23 @@ export default function Main() {
 }
 
 const styles = StyleSheet.create({
+    containerTabs: {
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        paddingLeft: 0,
+        paddingRight: 0,
+        backgroundColor: '#F5FBFF'
+    },  
     containerCard: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
+        display: "flex",
+        flexDirection: "column",
+        padding: 40,
+        paddingLeft: 0,
+        paddingRight: 0,
+        backgroundColor: '#F5FBFF'
     },
     text_buttonGet: {
         fontSize: 16,

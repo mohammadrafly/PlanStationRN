@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, Alert, ActivityIndicator } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, Image, Alert, ActivityIndicator } from 'react-native';
 import firebase from '../database/firebase';
 import Tombol from './custombutton';
 import GoogleAuth from './googleauth';
@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
+    marginTop: -150,
     padding: 40,
     paddingLeft: 0,
     paddingRight: 0,
@@ -148,16 +149,14 @@ const styles = StyleSheet.create({
     fontSize: 40,
   },
   logo_container: {
+    resizeMode: 'contain',
+    alignSelf: 'center',
     backgroundColor: '#fff',
-    width: 125,
-    height: 125,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 25,
-    marginTop: -100,
+    width: 130,
+    height: 130,
+    padding: 15,
     marginBottom: -75,
-    marginLeft: 150,
-    marginRight: 150,
+    borderRadius: 25,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

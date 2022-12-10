@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import firebase from '../database/firebase';
 import Tombol from './CustomButton2';
-import { StyleSheet, TextInput, View, Image, ScrollView, ActivityIndicator } from 'react-native';
+import DatePicker from './DatePicker';
+import { StyleSheet, Text, TextInput, View, Button, Image, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 class AddTask extends Component {
     constructor() {
@@ -11,15 +12,20 @@ class AddTask extends Component {
         nametask: '',
         subtask: '',
         detail: '',
+        deadline: '',
         uid: firebase.auth().currentUser.uid,
+        onProgress: '',
+        complete: '',
         isLoading: false
       };
     }
+
     inputValueUpdate = (val, prop) => {
       const state = this.state;
       state[prop] = val;
       this.setState(state);
     }
+
     storeTask() {
       if(this.state.nametask === ''){
        alert('Fill at least your nametask!')
@@ -28,15 +34,21 @@ class AddTask extends Component {
           isLoading: true,
         });      
         this.dbRef.add({
+          deadline: this.state.deadline,
           nametask: this.state.nametask,
           subtask: this.state.subtask,
           detail: this.state.detail,
+          onProgress: false,
+          complete: false,
           uid: firebase.auth().currentUser.uid,
         }).then((res) => {
           this.setState({
+            deadline: '',
             nametask: '',
             subtask: '',
             detail: '',
+            onProgress: '',
+            complete: '',
             uid: firebase.auth().currentUser.uid,
             isLoading: false,
           });
@@ -50,6 +62,7 @@ class AddTask extends Component {
         });
       }
     }
+    
     render() {
       if(this.state.isLoading){
         return(
@@ -63,7 +76,7 @@ class AddTask extends Component {
             <View style={styles.text_top_container}>
                 <TextInput
                     style={styles.inputStyleTop}
-                    placeholder={'nametask'}
+                    placeholder={'Task Name'}
                     value={this.state.nametask}
                     onChangeText={(val) => this.inputValueUpdate(val, 'nametask')}
                 />
@@ -75,22 +88,10 @@ class AddTask extends Component {
                         />
                         <TextInput
                             placeholder={'Repeat'}
-                            onPress={() => this.storeUser()}
                             underlineColorAndroid="transparent"
                         />
                     </View>
-
-                    <View style={styles.inputStyleTop2}>
-                        <Image
-                            source={require('../assets/pole.png')}
-                            style={styles.imageStyle}
-                        />
-                        <TextInput
-                            placeholder={'Deadline'}
-                            onPress={() => this.storeUser()}
-                            underlineColorAndroid="transparent"
-                        />
-                    </View>
+                    <DatePicker />
                 </View>
                     <View style={styles.inputStyleTop3}>
                         <Image
@@ -98,8 +99,7 @@ class AddTask extends Component {
                             style={styles.imageStyle}
                         />
                         <TextInput
-                            placeholder={'Reminer'}
-                            onPress={() => this.storeUser()}
+                            placeholder={'Reminder'}
                             underlineColorAndroid="transparent"
                         />
                     </View>
@@ -112,7 +112,6 @@ class AddTask extends Component {
                     onChangeText={(val) => this.inputValueUpdate(val, 'subtask')}
                 />
                 <TextInput
-                    multiline
                     style={styles.inputStyle}
                     placeholder={'Detail'}
                     value={this.state.detail}

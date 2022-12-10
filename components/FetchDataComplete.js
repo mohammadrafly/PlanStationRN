@@ -3,15 +3,14 @@ import React, { useState, useEffect } from 'react';
 import firebase  from '../database/firebase';
 import { SwipeListView } from 'react-native-swipe-list-view';
 
-const FetchData = () => {
+
+const FetchDataOnProgress = () => {
     const [tasks, setTask] = useState([]);
     const taskRef = firebase.firestore().collection('task')
     useEffect(() => {
         async function fetchData() {
             taskRef
-            .where('uid', '==', firebase.auth().currentUser.uid)
-            .where('onProgress', '==', false)
-            .where('complete', '==', false)
+            .where('complete', '==', true)
             .onSnapshot(
                 querySnapshot => {
                     const tasks = []
@@ -44,23 +43,10 @@ const FetchData = () => {
           });
       };
 
-    const updateTodo = (tasks) => {
-        taskRef
-            .doc(tasks.id)
-            .update({
-                onProgress: true,
-            })
-            .then(() => {
-                alert('Task On Progress Now!');
-            })
-            .catch((error) => {
-                alert(error);
-            });
-    }
-
     const onRowDidOpen = () => {
         console.log('This row opened');
     };
+
     return (
         <View style={styles.containerSwiper}>
             {!tasks && (
@@ -91,15 +77,6 @@ const FetchData = () => {
                     <View style={styles.rowBack}>
                         <TouchableOpacity
                             style={[styles.backRightBtn, styles.backRightBtnLeft]}
-                            onPress={() => updateTodo(item)}
-                        >
-                            <Image
-                                source={require('../assets/play.png')}
-                                style={styles.imageStyle}
-                            />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={[styles.backRightBtn, styles.backRightBtnRight]}
                             onPress={() => deleteTodo(item)}
                         >
                             <Image
@@ -110,7 +87,7 @@ const FetchData = () => {
                     </View>
                 )}
                 leftOpenValue={0}
-                rightOpenValue={-120}
+                rightOpenValue={-60}
                 previewRowKey={'0'}
                 previewOpenValue={-40}
                 previewOpenDelay={3000}
@@ -120,7 +97,7 @@ const FetchData = () => {
     )
 }
 
-export default FetchData
+export default FetchDataOnProgress
 
 const styles = StyleSheet.create({
     containerSwiper: {
@@ -128,20 +105,6 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         paddingVertical: 20,
-    },
-    new_task_top: {
-        textAlign: 'right',
-        paddingRight: 40,
-        fontSize: 20,
-        marginBottom: 10,
-    },
-    imageStyleTop: {
-        resizeMode: 'contain',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: 20,
-        width: 20,
-        alignItems: 'center'
     },
     imageStyle: {
         padding: 0,
@@ -156,8 +119,8 @@ const styles = StyleSheet.create({
         marginVertical: 15,
         flex: 1,
         flexDirection: 'row',
-        marginLeft: 280,
-        justifyContent: 'space-between',
+        marginRight: 25,
+        justifyContent: 'flex-end',
     },
     backRightBtn: {
         justifyContent: 'center',
@@ -165,15 +128,10 @@ const styles = StyleSheet.create({
         height: 48,
         width: 48,
         padding: 8,
-        backgroundColor: 'blue',
-    },
-    backRightBtnRight: {
         backgroundColor: 'red',
-        borderRadius: 12,
-        right: 25
     },
     backRightBtnLeftt: {
-        backgroundColor: 'blue',
+        backgroundColor: 'red',
     },
     //devide
     button: {
@@ -182,14 +140,13 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginLeft: 25,
         marginRight: 25,
-        marginVertical: 5,
         elevation: 3,
         padding: 8,
         marginTop: 10,
         backgroundColor: 'white',
         borderWidth: 0.5,
         borderColor: 'blue',
-        borderLeftWidth: 5,
+        borderLeftWidth: 3,
     },
     date: {
 
@@ -212,15 +169,5 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
         flex: 1,
-    },
-    wrapper: {
-        marginTop: 0,
-        marginBottom: 0,
-    },
-    text_desc: {
-        fontSize: 16,
-        color: '#00394C',
-        justifyContent: 'center',
-        textAlign: 'center',
     },
 })

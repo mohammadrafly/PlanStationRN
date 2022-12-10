@@ -7,6 +7,8 @@ import {
     Pressable,
 } from 'react-native';
 import FetchData from './FetchData';
+import FetchDataOnProgress from './FetchDataOnProgress';
+import FetchDataComplete from './FetchDataComplete';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 function ToDo() {
@@ -19,37 +21,17 @@ function ToDo() {
 
 function OnProgress() {
     return (
-        <View style={styles.text_input_container}>
-            <View style={styles.wrapper}>
-                <Text style={styles.text_input_top}>
-                    On Progress
-                </Text>
-                <Text style={styles.text_desc}>
-                    Manage your Task and get your Job Done with our Task Manager
-                </Text> 
-            </View>
-            <Pressable style={styles.buttonGet} onPress={() => this.props.navigation.navigate('Login')}>
-                <Text style={styles.text_buttonGet}>Get Started</Text>
-            </Pressable>   
+        <View style={styles.containerCard}>
+            <FetchDataOnProgress />
         </View>      
     );
   }
 
 function Complete() {
     return (
-        <View style={styles.text_input_container}>
-            <View style={styles.wrapper}>
-                <Text style={styles.text_input_top}>
-                    Complete
-                </Text>
-                <Text style={styles.text_desc}>
-                    Manage your Task and get your Job Done with our Task Manager
-                </Text> 
-            </View>
-            <Pressable style={styles.buttonGet} onPress={() => this.props.navigation.navigate('Login')}>
-                <Text style={styles.text_buttonGet}>Get Started</Text>
-            </Pressable>   
-        </View>    
+        <View style={styles.containerCard}>
+            <FetchDataComplete />
+        </View>  
     );
   }
 
@@ -89,7 +71,7 @@ const styles = StyleSheet.create({
         flex: 1,
         display: "flex",
         flexDirection: "column",
-        padding: 40,
+        paddingTop: 20,
         paddingLeft: 0,
         paddingRight: 0,
         backgroundColor: '#F5FBFF'

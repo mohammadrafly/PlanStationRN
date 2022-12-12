@@ -138,7 +138,7 @@ class AddTask extends Component {
     text_input_container: {
         backgroundColor: '#fff',
         width: '100%',
-        height: 500,
+        height: 1000,
         padding: 40,
         marginTop: -25,
         marginBottom: -300,

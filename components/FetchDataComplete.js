@@ -10,6 +10,7 @@ const FetchDataOnProgress = () => {
     useEffect(() => {
         async function fetchData() {
             taskRef
+            .where('uid', '==', firebase.auth().currentUser.uid)
             .where('complete', '==', true)
             .onSnapshot(
                 querySnapshot => {
@@ -64,7 +65,6 @@ const FetchDataOnProgress = () => {
                 numColumns={1}
                 renderItem={({item}) => (
                     <TouchableHighlight
-                        onPress={() => console.log('You touched me')}
                         style={styles.button}
                     >
                         <View>

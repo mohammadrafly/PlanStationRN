@@ -1,86 +1,56 @@
-import  * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { 
-    StyleSheet,
-    View,
-} from 'react-native';
-import FetchData from './FetchData';
-import FetchDataOnProgress from './FetchDataOnProgress';
-import FetchDataComplete from './FetchDataComplete';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, Image, ActivityIndicator, Pressable } from 'react-native';
 
-function ToDo() {
-    return (
-        <View style={styles.containerCard}>
-            <FetchData />
-        </View>
-    )
-}
+export default class Main extends Component {
 
-function OnProgress() {
-    return (
-        <View style={styles.containerCard}>
-            <FetchDataOnProgress />
-        </View>      
-    );
-  }
+    constructor() {
+        super();
+        this.state = { 
+          isLoading: false
+        }
+    }
 
-function Complete() {
-    return (
-        <View style={styles.containerCard}>
-            <FetchDataComplete />
-        </View>  
-    );
-}
-
-const Tab = createMaterialTopTabNavigator();
-
-export default function Main() {
+    render() {
+        if(this.state.isLoading){
+            return(
+                <View style={styles.preloader}>
+                <ActivityIndicator size="large" color="#F5FBFF"/>
+                </View>
+            )
+        }    
         return (
-        <View style={styles.containerTabs}>  
-            <NavigationContainer
-            independent={true}
-            >
-                <Tab.Navigator
-                    screenOptions={{
-                        swipeEnabled: false
-                    }}
-                >
-                    <Tab.Screen name="To Do" component={ToDo} />
-                    <Tab.Screen name="On Progress" component={OnProgress} />
-                    <Tab.Screen name="Complete" component={Complete} />
-                </Tab.Navigator>
-            </NavigationContainer>
+        <View style={styles.container}>  
+            <View style={styles.logo_container}>
+                <Image 
+                    style={styles.image}
+                    source={require('../assets/getstart.png')} 
+                />
+            </View>
+            <View style={styles.text_input_container}>
+                <View style={styles.wrapper}>
+                    <Text style={styles.text_input_top}>
+                        Task Manager
+                    </Text>
+                    <Text style={styles.text_desc}>
+                        Manage your Task and get your Job Done with our Task Manager
+                    </Text> 
+                </View>
+                <Pressable style={styles.buttonGet} onPress={() => this.props.navigation.navigate('Login')}>
+                    <Text style={styles.text_buttonGet}>Get Started</Text>
+                </Pressable>   
+            </View>           
         </View>
         );
+    }
 }
-
 const styles = StyleSheet.create({
-    containerTabs: {
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        paddingLeft: 0,
-        paddingRight: 0,
-        backgroundColor: '#F5FBFF'
-    },  
-    containerCard: {
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        paddingTop: 20,
-        paddingLeft: 0,
-        paddingRight: 0,
-        backgroundColor: '#F5FBFF'
-    },
     text_buttonGet: {
         fontSize: 16,
         lineHeight: 21,
         fontWeight: 'bold',
         letterSpacing: 0.25,
         color: 'white',
-    },
+      },
     buttonGet: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -137,7 +107,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         padding: 40,
-        borderRadius: 0,
+        borderRadius: 50,
+        marginBottom: -200,
         shadowColor: "#000",
         shadowOffset: {
           width: 0,

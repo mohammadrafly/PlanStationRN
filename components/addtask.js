@@ -1,8 +1,7 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import firebase from '../database/firebase';
 import Tombol from './CustomButton2';
-import DatePicker from './DatePicker';
-import { StyleSheet, Text, TextInput, View, Button, Image, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, TextInput, View, Text, Image, ActivityIndicator } from 'react-native';
 
 class AddTask extends Component {
     constructor() {
@@ -43,7 +42,7 @@ class AddTask extends Component {
           uid: firebase.auth().currentUser.uid,
         }).then((res) => {
           this.setState({
-            deadline: '',
+            deadline: this.state.deadline,
             nametask: '',
             subtask: '',
             detail: '',
@@ -52,7 +51,8 @@ class AddTask extends Component {
             uid: firebase.auth().currentUser.uid,
             isLoading: false,
           });
-          this.props.navigation.navigate('Task')
+          console.log(this.state.deadline);
+          this.props.navigation.navigate('Task');
         })
         .catch((err) => {
           console.error("Error found: ", err);
@@ -62,7 +62,6 @@ class AddTask extends Component {
         });
       }
     }
-    
     render() {
       if(this.state.isLoading){
         return(
@@ -74,37 +73,17 @@ class AddTask extends Component {
       return (
         <View style={styles.container}> 
             <View style={styles.text_top_container}>
+              <Text
+                    style={styles.inputStyleTopText}
+              >Add Task</Text>
+            </View>
+            <View style={styles.text_input_container}>
                 <TextInput
                     style={styles.inputStyleTop}
                     placeholder={'Task Name'}
                     value={this.state.nametask}
                     onChangeText={(val) => this.inputValueUpdate(val, 'nametask')}
                 />
-                <View style={styles.row}>
-                    <View style={styles.inputStyleTop2}>
-                        <Image
-                            source={require('../assets/flag.png')}
-                            style={styles.imageStyle}
-                        />
-                        <TextInput
-                            placeholder={'Repeat'}
-                            underlineColorAndroid="transparent"
-                        />
-                    </View>
-                    <DatePicker />
-                </View>
-                    <View style={styles.inputStyleTop3}>
-                        <Image
-                            source={require('../assets/time.png')}
-                            style={styles.imageStyle}
-                        />
-                        <TextInput
-                            placeholder={'Reminder'}
-                            underlineColorAndroid="transparent"
-                        />
-                    </View>
-            </View>
-            <ScrollView style={styles.text_input_container}>
                 <TextInput
                     style={styles.inputStyle}
                     placeholder={'Add Subtask'}
@@ -122,7 +101,7 @@ class AddTask extends Component {
                     title="Create"
                     onPress={() => this.storeTask()} 
                 /> 
-            </ScrollView>
+            </View>
         </View>
       );
     }
@@ -176,7 +155,6 @@ class AddTask extends Component {
         flex: 1,
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
         paddingLeft: 0,
         paddingRight: 0,
         backgroundColor: '#F5FBFF'
@@ -226,6 +204,19 @@ class AddTask extends Component {
         shadowRadius: 1.41,
         elevation: 2,
     },
+    inputStyleTopText: {
+      marginBottom: 100,
+      width: '100%',
+      marginBottom: 15,
+      padding: 15,
+      textAlign: "center",
+      borderColor: "white",
+      borderWidth: 1,
+      borderRadius: 10,
+      color: '#2F394B',
+      fontSize: 25,
+      fontWeight: 'bold'
+  },
     inputStyleTop2: {
         flexDirection: 'row',
         backgroundColor: 'white',

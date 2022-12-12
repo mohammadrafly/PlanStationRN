@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function DatePicker() {
@@ -7,6 +7,7 @@ export default function DatePicker() {
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
     const [title, setTitle] = useState("Select Date");
+
 
     const showMode = (currentMode) => {
         setShow(true);
@@ -20,11 +21,10 @@ export default function DatePicker() {
 
         let tempDate = new Date(currentDate);
         let fDate = tempDate.getFullYear() + '-' + (tempDate.getMonth() + 1) + '-' + tempDate.getDate();
-        console.log(fDate)
-  
-        setTitle(fDate.toString())
+        
+        setTitle(fDate.toString());
     }
-    
+
     return (
         <TouchableOpacity 
             onPress={() => showMode('date')}
@@ -45,11 +45,10 @@ export default function DatePicker() {
             )}
             {!show && (
                 <View>
-                    <Text 
+                    <Text
                         style={{marginTop: 7, color: 'gray'}}
-                    >
-                        Deadline
-                    </Text>
+                        title='Deadline'
+                    >Deadline</Text>
                 </View>
             )}
         </TouchableOpacity>

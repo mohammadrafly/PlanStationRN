@@ -1,10 +1,12 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Profile from './profile';
 import Agenda from './agenda';
 import Task from './task';
 import AddTask from './addtask';
+import Promodoro from './Promodoro';
+import BottomBar from './BottomBar';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -32,16 +34,6 @@ function TabNav() {
               tabBarLabel: 'Add Task',
               tabBarIcon: ({ color }) => (
                 <MaterialCommunityIcons name="plus" color={color} size={26} />
-              ),
-            }}
-          />
-          <Tab.Screen 
-            name="Agenda" 
-            component={Agenda} 
-            options={{
-              tabBarLabel: 'Agenda',
-              tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="calendar" color={color} size={26} />
               ),
             }}
           />

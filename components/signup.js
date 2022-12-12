@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Image, Text, View, Alert, ActivityIndicator } from 'react-native';
+import { StyleSheet, Image, Text, View, Alert, ActivityIndicator } from 'react-native';
 import firebase from '../database/firebase';
 import Tombol from './custombutton';
 import InputBox from 'react-native-floating-label-inputbox';

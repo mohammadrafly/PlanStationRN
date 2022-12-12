@@ -2,8 +2,10 @@ import { View, Text, StyleSheet, Image, TouchableHighlight, TouchableOpacity } f
 import React, { useState, useEffect } from 'react';
 import firebase  from '../database/firebase';
 import { SwipeListView } from 'react-native-swipe-list-view';
+import { useNavigation } from '@react-navigation/native';
 
 const FetchData = () => {
+    const navigation = useNavigation(); 
     const [tasks, setTask] = useState([]);
     const taskRef = firebase.firestore().collection('task')
     useEffect(() => {
@@ -59,8 +61,9 @@ const FetchData = () => {
     }
 
     const onRowDidOpen = () => {
-        console.log('This row opened');
+        navigation.navigate('DetailTask')
     };
+
     return (
         <View style={styles.containerSwiper}>
             {!tasks && (
@@ -78,7 +81,6 @@ const FetchData = () => {
                 numColumns={1}
                 renderItem={({item}) => (
                     <TouchableHighlight
-                        onPress={() => console.log('You touched me')}
                         style={styles.button}
                     >
                         <View>
@@ -156,11 +158,13 @@ const styles = StyleSheet.create({
         marginVertical: 15,
         flex: 1,
         flexDirection: 'row',
-        marginLeft: 280,
+        padding: 5,
+        alignSelf: 'flex-end',
         justifyContent: 'space-between',
+        marginRight: 25,
     },
     backRightBtn: {
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         borderRadius: 12,
         height: 48,
         width: 48,
@@ -169,8 +173,6 @@ const styles = StyleSheet.create({
     },
     backRightBtnRight: {
         backgroundColor: 'red',
-        borderRadius: 12,
-        right: 25
     },
     backRightBtnLeftt: {
         backgroundColor: 'blue',

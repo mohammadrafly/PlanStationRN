@@ -1,5 +1,5 @@
 import React from 'react';
-import './database/firebase';
+import './config/Firebase';
 import RootNavigation from './routes';
 
 export default function App() {

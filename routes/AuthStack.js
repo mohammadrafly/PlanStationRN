@@ -1,14 +1,15 @@
-import * as React from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Login from '../components/login';
-import Signup from '../components/signup';
-import Dashboard from '../components/dashboard';
-import Main from '../components/main';
+
+import SignInScreen from '../screens/SignInScreen';
+import SignUpScreen from '../screens/SignUpScreen';
+import AppStack from '../routes/AppStack';
+import MainScreen from '../screens/MainScreen';
 
 const Stack = createStackNavigator();
 
-function MainStack() {
+function AuthScreens() {
   return (
     <Stack.Navigator
       initialRouteName="Main"
@@ -24,29 +25,29 @@ function MainStack() {
         headerShown: true,
       }}>
       <Stack.Screen 
-        name="Signup" 
-        component={Signup} 
-        options={{ title: 'Signup' }}
+       name="Main" 
+       component={MainScreen} 
+       options={
+         { title: 'Main' }
+       }
+      />
+      <Stack.Screen 
+        name="SignUp" 
+        component={SignUpScreen} 
+        options={{ title: 'SignUp' }}
       />       
       <Stack.Screen 
-        name="Login" 
-        component={Login} 
+        name="SignIn" 
+        component={SignInScreen} 
         options={
-          {title: 'Login'}
+          {title: 'SignIn'}
         }
       />
       <Stack.Screen 
        name="Dashboard" 
-       component={Dashboard} 
+       component={AppStack} 
        options={
          { title: 'Dashboard' }
-       }
-      />
-      <Stack.Screen 
-       name="Main" 
-       component={Main} 
-       options={
-         { title: 'Main' }
        }
       />
     </Stack.Navigator>
@@ -55,7 +56,7 @@ function MainStack() {
 export default function App() {
   return (
     <NavigationContainer>
-      <MainStack />
+      <AuthScreens />
     </NavigationContainer>
   );
 }

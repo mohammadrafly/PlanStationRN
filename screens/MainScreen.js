@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, ActivityIndicator, Pressable } from 'react-native';
 
-export default class Main extends Component {
+export default class MainScreen extends Component {
 
     constructor() {
         super();
@@ -35,7 +35,7 @@ export default class Main extends Component {
                         Manage your Task and get your Job Done with our Task Manager
                     </Text>
                 </View>
-                <Pressable style={styles.buttonGet} onPress={() => this.props.navigation.navigate('Login')}>
+                <Pressable style={styles.buttonGet} onPress={() => this.props.navigation.navigate('SignUp')}>
                     <Text style={styles.text_buttonGet}>Get Started</Text>
                 </Pressable>
             </View>           

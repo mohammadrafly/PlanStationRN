@@ -8,6 +8,7 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
+      "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -31,13 +32,9 @@
       "favicon": "./assets/favicon.png"
     },
     "scheme": "com.dev.planstation",
-    "plugins": [
-      "@react-native-firebase/app",
-      "@react-native-firebase/perf"
-    ],
     "extra": {
       "eas": {
-        "projectId": "feea1628-f03c-4c32-b298-82c2df6cb1bd"
+        "projectId": "02418adb-7a17-4379-af48-2eb587a3302b"
       }
     }
   }

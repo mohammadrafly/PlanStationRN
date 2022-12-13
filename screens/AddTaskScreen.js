@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import firebase from '../database/firebase';
-import Tombol from './CustomButton2';
+import firebase from '../config/Firebase';
+import Tombol from '../components/CustomButtonApp';
 import { StyleSheet, TextInput, View, Text, Image, ActivityIndicator } from 'react-native';
 
 class AddTask extends Component {

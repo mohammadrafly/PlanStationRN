@@ -1,62 +1,67 @@
-import React, { Component } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import Profile from '../components/profile';
-import Agenda from '../components/agenda';
-import AddTask from '../components/addtask';
-import Dashboard from '../components/dashboard';
-import DetailTask from '../components/DetailTask';
+import React, { Component, useState, useEffect } from 'react';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Profile from '../screens/ProfileScreen';
+import Agenda from '../screens/AgendaScreen';
+import Task from '../screens/TaskScreen';
+import AddTask from '../screens/AddTaskScreen';
 
-const Stack = createStackNavigator();
+const Tab = createMaterialBottomTabNavigator();
 
-export default class AppStack extends Component {
-  render() {   
-    return (
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="Dashboard"
-          screenOptions={{
-            headerTitleAlign: 'center',
-            headerStyle: {
-              backgroundColor: '#F5FBFF',
-            },
-            headerTintColor: '#2F394B',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-            headerShown: true,
-          }}>
-          <Stack.Screen 
-            name="Dashboard"
-            component={Dashboard}
-            options={{ title: 'Dashboard'}}
+function TabNav() {
+  return (
+        <Tab.Navigator
+          initialRouteName="Task"
+          activeColor="#5E548E"
+          barStyle={{ backgroundColor: 'white' }}
+        >
+          <Tab.Screen 
+            name="Task" 
+            component={Task} 
+            options={{
+              tabBarLabel: 'Task',
+              tabBarIcon: ({ color }) => (
+                <MaterialCommunityIcons name="check" color={color} size={26} />
+              ),
+            }}
           />
-          <Stack.Screen
-            name="DetailTask"
-            component={DetailTask}
-            options={{ title: 'DetailTask'}}
-          />
-          <Stack.Screen 
+          <Tab.Screen 
             name="AddTask" 
             component={AddTask} 
-            options={{ title: 'Add Task' }}
-          />       
-          <Stack.Screen 
+            options={{
+              tabBarLabel: 'Add Task',
+              tabBarIcon: ({ color }) => (
+                <MaterialCommunityIcons name="plus" color={color} size={26} />
+              ),
+            }}
+          />
+          <Tab.Screen 
             name="Agenda" 
             component={Agenda} 
-            options={
-              {title: 'Agenda'}
-            }
+            options={{
+              tabBarLabel: 'Agenda',
+              tabBarIcon: ({ color }) => (
+                <MaterialCommunityIcons name="calendar" color={color} size={26} />
+              ),
+            }}
           />
-          <Stack.Screen 
-          name="Profile" 
-          component={Profile} 
-          options={
-            { title: 'Profile' }
-          }
+          <Tab.Screen 
+            name="Profile" 
+            component={Profile} 
+            options={{
+              tabBarLabel: 'Profile',
+              tabBarIcon: ({ color }) => (
+                <MaterialCommunityIcons name="account" color={color} size={26} />
+              ),
+            }}
           />
-        </Stack.Navigator>
-      </NavigationContainer>
+        </Tab.Navigator>
+  )
+}
+export default class Dashboard extends Component {
+  render() {   
+    return (
+        <TabNav />
     );
   }
 }

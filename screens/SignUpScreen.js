@@ -1,59 +1,62 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Text, View, Image, Alert, ActivityIndicator } from 'react-native';
-import firebase from '../database/firebase';
-import Tombol from './custombutton';
-import GoogleAuth from './googleauth';
+import { StyleSheet, Image, Text, View, Alert, ActivityIndicator } from 'react-native';
+import firebase from '../config/Firebase';
+import Tombol from '../components/CustomButton';
 import InputBox from 'react-native-floating-label-inputbox';
 
-export default class Login extends Component {
+export default class Signup extends Component {
+
   constructor() {
     super();
     this.state = { 
+      displayName: '',
       email: '', 
       password: '',
+      isLoading: false
     }
   }
-
   updateInputVal = (val, prop) => {
     const state = this.state;
     state[prop] = val;
     this.setState(state);
   }
-
-  userLogin = () => {
+  registerUser = () => {
     if(this.state.email === '' && this.state.password === '') {
-      Alert.alert('Form Ga Boleh Kosong Gan!')
+      Alert.alert('Enter details to signup!')
     } else {
       this.setState({
         isLoading: true,
       })
       firebase
       .auth()
-      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then((res) => {
-        console.log(res)
-        console.log('User logged-in successfully!')
+        res.user.updateProfile({
+          displayName: this.state.displayName
+        })
+        console.log('User registered successfully!')
         this.setState({
           isLoading: false,
+          displayName: '',
           email: '', 
           password: ''
         })
-        this.props.navigation.navigate('Dashboard')
+        this.props.navigation.navigate('SignIn')
       })
-      .catch(error => this.setState({ errorMessage: error.message }))
+      .catch(error => this.setState({ errorMessage: error.message }))      
     }
   }
+  
   render() {
     if(this.state.isLoading){
       return(
         <View style={styles.preloader}>
-          <ActivityIndicator size="large" color="#F5FBFF"/>
+          <ActivityIndicator size="large" color="#5E548E"/>
         </View>
       )
     }    
-
     return (
-      <View style={styles.container}>  
+      <View style={styles.container}>
         <View style={styles.logo_container}>
           <Image 
             style={styles.image}
@@ -69,8 +72,15 @@ export default class Login extends Component {
         </View>
         <View style={styles.text_input_container}>
           <Text style={styles.text_input_top}>
-            Sign In With
+            Sign Up
           </Text>
+          <InputBox
+            inputOutline
+            style={styles.inputStyle}
+            label={'Name'}
+            value={this.state.name}
+            onChangeText={(val) => this.updateInputVal(val, 'name')}
+           />
           <InputBox
             inputOutline
             style={styles.inputStyle}
@@ -88,28 +98,20 @@ export default class Login extends Component {
             secureTextEntry={true}
            />
           <Tombol
-            color="#3740FE"
             title="Continue"
-            onPress={() => this.userLogin()}
-          />   
+            onPress={() => this.registerUser()}
+          />
           <Text 
             style={styles.loginText}
-            onPress={() => this.props.navigation.navigate('Signup')}>
-            Don't have account? Click here to signup
-          </Text>    
-          <Text 
-            style={styles.or}
-          >
-            Or
-          </Text>
-          <GoogleAuth
-            title="Sign in with Google"
-          />      
-        </View>           
+            onPress={() => this.props.navigation.navigate('SignIn')}>
+            Already Registered? Click here to sign in
+          </Text>         
+        </View>                 
       </View>
     );
   }
 }
+
 const styles = StyleSheet.create({
   text_input_top: {
     fontWeight: 'bold',
@@ -117,20 +119,14 @@ const styles = StyleSheet.create({
     paddingTop: -200,
     paddingBottom: 10,
     color: '#2F394B',
-    justifyContent: 'center',
+    justifyContent: "center",
     textAlign: 'left',
-  },
-  or: {
-    margin: 10,
-    textAlign: 'center',
-    fontSize: 20,
   },
   container: {
     flex: 1,
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    marginTop: -150,
     padding: 40,
     paddingLeft: 0,
     paddingRight: 0,
@@ -155,6 +151,7 @@ const styles = StyleSheet.create({
     width: 130,
     height: 130,
     padding: 15,
+    marginTop: -200,
     marginBottom: -75,
     borderRadius: 25,
     shadowColor: "#000",
@@ -190,13 +187,11 @@ const styles = StyleSheet.create({
   inputStyle: {
     width: '100%',
     marginBottom: 15,
-    padding: 10,
-    paddingLeft: 20,
-    paddingRight: 20,
+    padding: 8,
     alignSelf: "center",
     borderColor: "#5E548E",
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: 10
   },
   loginText: {
     color: 'black',

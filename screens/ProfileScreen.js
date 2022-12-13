@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import firebase from '../database/firebase';
+import firebase from '../config/Firebase';
 import { StyleSheet, Text, TextInput, ScrollView, View, Image, ActivityIndicator, Pressable } from 'react-native';
 import Constants from 'expo-constants';
-import { getAuth, signOut } from 'firebase/auth';
 
-const auth = getAuth();
-
-export default class Profile extends Component {
+export default class ProfileScreen extends Component {
     constructor() {
         super();
         this.state = { 
@@ -32,6 +29,14 @@ export default class Profile extends Component {
             )
         }    
 
+        var signOut = async () => {
+            firebase.auth().signOut().then(() => {
+                console.log('User logged-out successfully!')
+                this.props.navigation.navigate('Login')
+            })
+            .catch(error => this.setState({ errorMessage: error.message }))
+        }  
+
         let Image_Http_URL ={ uri: this.state.photoURL};
 
         return (
@@ -48,7 +53,7 @@ export default class Profile extends Component {
                     </Text>
                     <Text 
                         style={styles.Logout}
-                        onPress={() => signOut(auth)}>
+                        onPress={signOut}>
                         Log Out
                     </Text>
                 <View style={styles.text_input_container}>
@@ -221,13 +226,20 @@ const styles = StyleSheet.create({
         fontSize: 40,
     },
     logo_container: {
-        resizeMode: 'contain',
-        alignSelf: 'center',
-        width: 130,
-        height: 130,
-        padding: 15,
+        width: 140,
+        height: 140,
+        borderRadius: 15,
         marginBottom: 100,
-        borderRadius: 25,
+        alignSelf: 'center',
+        alignText: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 1,
+        },
+        shadowOpacity: 0.20,
+        shadowRadius: 1.41,
+        elevation: 2,
     },
     text_input_container: {
         backgroundColor: '#fff',

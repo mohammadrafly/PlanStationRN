@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Image, TouchableHighlight, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import firebase  from '../../config/Firebase';
+import firebase  from '../database/firebase';
 import { SwipeListView } from 'react-native-swipe-list-view';
 
 
@@ -84,7 +84,7 @@ const FetchDataOnProgress = () => {
                             onPress={() => updateTodo(item)}
                         >
                             <Image
-                                source={require('./img/check.png')}
+                                source={require('../assets/check.png')}
                                 style={styles.imageStyle}
                             />
                         </TouchableOpacity>

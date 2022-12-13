@@ -4,9 +4,9 @@ import {
     StyleSheet,
     View,
 } from 'react-native';
-import FetchData from '../utils/hooks/FetchData';
-import FetchDataOnProgress from '../utils/hooks/FetchDataOnProgress';
-import FetchDataComplete from '../utils/hooks/FetchDataComplete';
+import FetchData from './FetchData';
+import FetchDataOnProgress from './FetchDataOnProgress';
+import FetchDataComplete from './FetchDataComplete';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 function ToDo() {

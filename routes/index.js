@@ -1,4 +1,4 @@
-import { useAuthentication } from '../utils/useAuthentication';
+import { useAuthentication } from '../utils/hook/useAuthentication';
 import AppStack from './AppStack';
 import AuthStack from './AuthStack';
 

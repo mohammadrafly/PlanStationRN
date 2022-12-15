@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "822101279077",
+    "project_id": "plan-station-5ebdf",
+    "storage_bucket": "plan-station-5ebdf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822101279077:android:79b6bc01b0ce404752618c",
+        "android_client_info": {
+          "package_name": "com.dev.planstation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822101279077-iev9drfuhentbb0nimgp06ima549t817.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dev.planstation",
+            "certificate_hash": "8b99d51f13f3aef86a2c229044e5feb7bc106ed4"
+          }
+        },
+        {
+          "client_id": "822101279077-87f7fcttmvq203lk8fetvr204ti5pb3c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPOuSkDCRWzBoyiw_MLxkJIYtQvWqUjVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822101279077-87f7fcttmvq203lk8fetvr204ti5pb3c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

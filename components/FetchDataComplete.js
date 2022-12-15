@@ -16,13 +16,14 @@ const FetchDataOnProgress = () => {
                 querySnapshot => {
                     const tasks = []
                     querySnapshot.forEach((doc) => {
-                        const { detail, uid, nametask, subtask } = doc.data()
+                        const { detail, uid, name, subtask, deadline } = doc.data()
                         tasks.push({
                             id: doc.id,
                             uid,
-                            nametask,
+                            name,
                             subtask,
-                            detail
+                            detail,
+                            deadline
                         })
                     })
                     setTask(tasks)
@@ -68,7 +69,8 @@ const FetchDataOnProgress = () => {
                         style={styles.button}
                     >
                         <View>
-                            <Text style={styles.textHeading}>{item.nametask}</Text>
+                            <Text> Due, {item.deadline}</Text>
+                            <Text style={styles.textHeading}>{item.name}</Text>
                             <Text style={styles.textDetail}>{item.detail}</Text>
                         </View>
                     </TouchableHighlight>
@@ -91,7 +93,6 @@ const FetchDataOnProgress = () => {
                 previewRowKey={'0'}
                 previewOpenValue={-40}
                 previewOpenDelay={3000}
-                onRowDidOpen={onRowDidOpen}
             />
         </View>
     )

@@ -3,9 +3,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Profile from '../components/profile';
 import Agenda from '../components/agenda';
-import AddTask from '../components/addtask';
+import AddTask from '../components/AddTask';
 import Dashboard from '../components/dashboard';
-import DetailTask from '../components/DetailTask';
+import Promodoro from '../components/Promodoro';
 
 const Stack = createStackNavigator();
 
@@ -29,12 +29,12 @@ export default class AppStack extends Component {
           <Stack.Screen 
             name="Dashboard"
             component={Dashboard}
-            options={{ title: 'Dashboard'}}
+            options={{ title: 'PlanStation'}}
           />
-          <Stack.Screen
-            name="DetailTask"
-            component={DetailTask}
-            options={{ title: 'DetailTask'}}
+          <Stack.Screen 
+            name="Promodoro"
+            component={Promodoro}
+            options={{ title: 'Promodoro'}}
           />
           <Stack.Screen 
             name="AddTask" 

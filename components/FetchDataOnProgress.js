@@ -11,16 +11,16 @@ const FetchDataOnProgress = () => {
         async function fetchData() {
             taskRef
             .where('uid', '==', firebase.auth().currentUser.uid)
-            .where('onProgress', '==', true)
+            .where('onprogress', '==', true)
             .onSnapshot(
                 querySnapshot => {
                     const tasks = []
                     querySnapshot.forEach((doc) => {
-                        const { detail, uid, nametask, subtask } = doc.data()
+                        const { detail, uid, name, subtask } = doc.data()
                         tasks.push({
                             id: doc.id,
                             uid,
-                            nametask,
+                            name,
                             subtask,
                             detail
                         })
@@ -36,7 +36,7 @@ const FetchDataOnProgress = () => {
         taskRef
             .doc(tasks.id)
             .update({
-                onProgress: false,
+                onprogress: false,
                 complete: true
             })
             .then(() => {
@@ -72,7 +72,7 @@ const FetchDataOnProgress = () => {
                         style={styles.button}
                     >
                         <View>
-                            <Text style={styles.textHeading}>{item.nametask}</Text>
+                            <Text style={styles.textHeading}>{item.name}</Text>
                             <Text style={styles.textDetail}>{item.detail}</Text>
                         </View>
                     </TouchableHighlight>

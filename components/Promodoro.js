@@ -1,137 +1,93 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, ActivityIndicator, Pressable } from 'react-native';
+import  React, { useState, useEffect } from 'react';
+import { 
+    StyleSheet,
+    View,
+    Text, 
+    TouchableOpacity, 
+    Dimensions
+} from 'react-native';
 
-export default class Main extends Component {
+const screen = Dimensions.get('window');
 
-    constructor() {
-        super();
-        this.state = { 
-          isLoading: false
+const formatNumber = number => `0${number}`.slice(-2);
+
+const getRemaining = (time) => {
+    const mins = Math.floor(time / 60);
+    const secs = time - mins * 60;
+    return { mins: formatNumber(mins), secs: formatNumber(secs) };
+}
+
+export default function Main() {
+    const [remainingSecs, setRemainingSecs] = useState(0);
+    const [isActive, setIsActive] = useState(false);
+    const { mins, secs } = getRemaining(remainingSecs);
+
+    const toggle = () => {
+        setIsActive(!isActive);
+      }
+    
+    const reset = () => {
+        setRemainingSecs(0);
+        setIsActive(false);
+      }
+    
+    useEffect(() => {
+        let interval = null;
+        if (isActive) {
+          interval = setInterval(() => {
+            setRemainingSecs(remainingSecs => remainingSecs + 1);
+          }, 1000);
+        } else if (!isActive && remainingSecs !== 0) {
+          clearInterval(interval);
         }
-    }
-
-    render() {
-        if(this.state.isLoading){
-            return(
-                <View style={styles.preloader}>
-                <ActivityIndicator size="large" color="#F5FBFF"/>
-                </View>
-            )
-        }    
+        return () => clearInterval(interval);
+      }, [isActive, remainingSecs]);
+    
         return (
         <View style={styles.container}>  
-            <View style={styles.logo_container}>
-                <Image 
-                    style={styles.image}
-                    source={require('../assets/getstart.png')} 
-                />
+            <View style={styles.containerCard}>
+                <Text style={styles.timerText}>{`${mins}:${secs}`}</Text>
+                <TouchableOpacity onPress={toggle} style={styles.button}>
+                    <Text style={styles.buttonText}>{isActive ? 'Pause' : 'Start'}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={reset} style={[styles.button, styles.buttonReset]}>
+                    <Text style={[styles.buttonText, styles.buttonTextReset]}>Reset</Text>
+                </TouchableOpacity>
             </View>
-            <View style={styles.text_input_container}>
-                <View style={styles.wrapper}>
-                    <Text style={styles.text_input_top}>
-                        Task Manager
-                    </Text>
-                    <Text style={styles.text_desc}>
-                        Manage your Task and get your Job Done with our Task Manager
-                    </Text> 
-                </View>
-                <Pressable style={styles.buttonGet} onPress={() => this.props.navigation.navigate('Login')}>
-                    <Text style={styles.text_buttonGet}>Get Started</Text>
-                </Pressable>   
-            </View>           
         </View>
         );
-    }
 }
+
 const styles = StyleSheet.create({
-    text_buttonGet: {
-        fontSize: 16,
-        lineHeight: 21,
-        fontWeight: 'bold',
-        letterSpacing: 0.25,
-        color: 'white',
-      },
-    buttonGet: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 20,
-        paddingHorizontal: 32,
-        marginLeft: 50,
-        marginRight: 50,
-        borderRadius: 12,
-        marginTop: 15,
-        elevation: 3,
-        padding: 8,
-        backgroundColor: '#5E548E',
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 1,
-        },
-        shadowOpacity: 0.20,
-        shadowRadius: 1.41,
-        elevation: 2,
-    },
-    wrapper: {
-        marginTop: 30,
-        marginBottom: 60,
-    },
     container: {
         flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        padding: 40,
-        paddingLeft: 0,
-        paddingRight: 0,
-        backgroundColor: '#F5FBFF'
-    },
-    text_logo_container: {
-        marginTop: 0,
-        marginBottom: 200,
-    },
-    text_logo: {
-        color: '#00394C',
-        position: 'absolute',
-        alignSelf: 'center',
-        marginTop: 100,
-        fontWeight: 'bold',
-        fontSize: 40,
-    },
-    logo_container: {
-        marginBottom: -100,
-        marginLeft: 50,
-    },
-    text_input_container: {
         backgroundColor: '#fff',
-        width: '100%',
-        height: '100%',
-        padding: 40,
-        borderRadius: 50,
-        marginBottom: -200,
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 1,
-        },
-        shadowOpacity: 0.20,
-        shadowRadius: 1.41,
-        elevation: 2,
-    },  
-    image: {
-        width: 300,
-        height: 300,
-        marginBottom: 100,
-        resizeMode: 'contain'
-    },
-    preloader: {
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        position: 'absolute',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#fff',
-    }
+      },
+      button: {
+          borderWidth: 10,
+          borderColor: '#B9AAFF',
+          width: screen.width / 2,
+          height: screen.width / 2,
+          borderRadius: screen.width / 2,
+          alignItems: 'center',
+          justifyContent: 'center'
+      },
+      buttonText: {
+          fontSize: 45,
+          color: '#B9AAFF'
+      },
+      timerText: {
+          color: '#00394C',
+          fontSize: 90,
+          marginBottom: 20
+      },
+      buttonReset: {
+          marginTop: 20,
+          borderColor: "#FF851B"
+      },
+      buttonTextReset: {
+        color: "#FF851B"
+      }
 });

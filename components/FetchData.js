@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import firebase  from '../database/firebase';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { useNavigation } from '@react-navigation/native';
+import { Button, Card, Title, Paragraph } from 'react-native-paper';
+import moment from 'moment';
+import 'moment/locale/id';
 
 const FetchData = () => {
     const navigation = useNavigation(); 
@@ -12,19 +15,21 @@ const FetchData = () => {
         async function fetchData() {
             taskRef
             .where('uid', '==', firebase.auth().currentUser.uid)
-            .where('onProgress', '==', false)
+            .where('onprogress', '==', false)
             .where('complete', '==', false)
             .onSnapshot(
                 querySnapshot => {
                     const tasks = []
                     querySnapshot.forEach((doc) => {
-                        const { detail, uid, nametask, subtask } = doc.data()
+                        const { detail, uid, name, subtask, deadline, category } = doc.data()
                         tasks.push({
                             id: doc.id,
                             uid,
-                            nametask,
+                            name,
                             subtask,
-                            detail
+                            detail,
+                            deadline,
+                            category
                         })
                     })
                     setTask(tasks)
@@ -36,21 +41,21 @@ const FetchData = () => {
 
     const deleteTodo = (tasks) => {
         taskRef
-          .doc(tasks.id)
-          .delete()
-          .then(() => {
-            alert('Deleted successfully');
-          })
-          .catch((error) => {
-            alert(error);
-          });
-      };
+            .doc(tasks.id)
+            .delete()
+            .then(() => {
+                alert('Deleted successfully');
+            })
+            .catch((error) => {
+                alert(error);
+            });
+    };
 
     const updateTodo = (tasks) => {
         taskRef
             .doc(tasks.id)
             .update({
-                onProgress: true,
+                onprogress: true,
             })
             .then(() => {
                 alert('Task On Progress Now!');
@@ -59,11 +64,6 @@ const FetchData = () => {
                 alert(error);
             });
     }
-
-    const onRowDidOpen = () => {
-        navigation.navigate('DetailTask')
-    };
-
     return (
         <View style={styles.containerSwiper}>
             {!tasks && (
@@ -80,14 +80,14 @@ const FetchData = () => {
                 data={tasks}
                 numColumns={1}
                 renderItem={({item}) => (
-                    <TouchableHighlight
-                        style={styles.button}
-                    >
-                        <View>
-                            <Text style={styles.textHeading}>{item.nametask}</Text>
-                            <Text style={styles.textDetail}>{item.detail}</Text>
-                        </View>
-                    </TouchableHighlight>
+                    <Card style={styles.button}>
+                        <Paragraph>Due, {item.deadline}</Paragraph>
+                        <Card.Title style={styles.textTitle} title={item.name} />
+                        <Card.Content>
+                            <Paragraph>Category: {item.category}</Paragraph>
+                            <Paragraph>Detail: {item.detail}</Paragraph>
+                        </Card.Content>
+                    </Card>
                 )}
                 renderHiddenItem={({item}) => (
                     <View style={styles.rowBack}>
@@ -116,7 +116,6 @@ const FetchData = () => {
                 previewRowKey={'0'}
                 previewOpenValue={-40}
                 previewOpenDelay={3000}
-                onRowDidOpen={onRowDidOpen}
             />
         </View>
     )
@@ -125,6 +124,21 @@ const FetchData = () => {
 export default FetchData
 
 const styles = StyleSheet.create({
+    textTitle: {
+        fontSize: 200,
+    },
+    textCategory: {
+        backgroundColor: 'blue',
+        color: 'white',
+        height: 25,
+        width: 100,
+        flex:1,
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'center',
+        textAlign: 'center',
+        borderRadius: 10
+    },
     containerSwiper: {
         backgroundColor: 'white',
         height: '100%',
